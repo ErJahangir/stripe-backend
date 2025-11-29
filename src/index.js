@@ -22,14 +22,16 @@ app.post("/create-payment-intent", async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency,
-      payment_method_types: ["card", "card_google_pay"], // ADD THIS
       automatic_payment_methods: {
         enabled: true,
         allow_redirects: "never",
       },
     });
 
-    res.json({ clientSecret: paymentIntent.client_secret });
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
