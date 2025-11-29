@@ -29,5 +29,11 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 4242;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Export for Vercel serverless functions
+module.exports = app;
+
+// For local development only
+if (require.main === module) {
+  const port = process.env.PORT || 4242;
+  app.listen(port, () => console.log(`Server running on port ${port}`));
+}
