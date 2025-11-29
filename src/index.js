@@ -20,12 +20,13 @@ app.post("/create-payment-intent", async (req, res) => {
     const { amount = 500, currency = "usd" } = req.body;
 
     const paymentIntent = await stripe.paymentIntents.create({
+      payment_method_types: ["card"],
       amount,
       currency,
-      automatic_payment_methods: {
-        enabled: true,
-        allow_redirects: "never",
-      },
+      // automatic_payment_methods: {
+      //   enabled: true,
+      //   allow_redirects: "never",
+      // },
     });
 
     res.json({
